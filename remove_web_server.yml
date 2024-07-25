@@ -1,0 +1,22 @@
+- hosts: all
+  become: yes
+  tasks:
+
+    # - name: stop service
+    #   ansible.builtin.service:
+    #     name: httpd
+    #     state: stopped
+
+    - name: uninstall dnf
+      dnf:
+        name: "httpd"
+        state: absent
+
+    
+
+    - name:  remove file
+      ansible.builtin.file:
+          path: /var/www/index.html
+          state: absent
+           
+           

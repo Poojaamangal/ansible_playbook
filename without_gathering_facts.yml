@@ -1,0 +1,8 @@
+---
+- name: Task execution without gathering facts
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Print a simple message
+      debug:
+        msg: "This task runs without gathering facts."

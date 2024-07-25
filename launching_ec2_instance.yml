@@ -1,0 +1,30 @@
+- name: launching ec2 instance
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    aws_access_key:  /home/pooja/.aws/credentials
+    aws_secret_key: /home/pooja/.aws/credentials
+    instance_type: t2.micro
+    region: ap-south-1
+    instance_name: server1
+    key_pair_name: test
+    ami: ami-068e0f1a600cd311c
+    security_grps: sg-03c30eb1fc47213de
+    c: 4
+
+  tasks:
+  - name: launching ec2 instancen    
+    amazon.aws.ec2_instance:
+      key_name: test
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
+      region: "{{ region }}"
+      instance_type: "{{ instance_type }}"
+      security_group: "{{ security_grps }}"
+      image_id: "{{ ami }}"
+      count: "{{ c }}"
+      subnet_id: subnet-0748315c58f2bab4f
+      tags:
+        Name: "{{ instance_name }}"
+ 

@@ -1,0 +1,7 @@
+- name: execution of gathering facts
+  hosts: localhost
+  gather_facts: True
+  tasks:
+  - name: print system information on screen
+    debug:
+     var: ansible_facts
