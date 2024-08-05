@@ -1,0 +1,18 @@
+name: Get IPs from EC2 instances
+  hosts: localhost
+  vars:
+    region: "ap-south-1"
+    output_file: "/home/pooja/newip.txt"
+  tasks:
+    - name: Get information about EC2 instances
+      amazon.aws.ec2_instance_info:
+        region: "{{ region }}"
+      register: ec2_info
+
+    - name: Extract and print public IPs to file
+      lineinfile:
+        path: "{{ output_file }}"
+        line: "{{ item.public_ip_address }}"  
+        state: present
+      loop: "{{ ec2_info.instances }}"
+      when: item.public_ip_address is defined
