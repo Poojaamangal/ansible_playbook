@@ -1,0 +1,28 @@
+- name: get ip
+  hosts: localhost
+  vars:
+    region: "ap-south-1"
+    output_file: "/home/pooja/newip.txt"
+  tasks:
+    - name: get information
+      amazon.aws.ec2_instance_info:
+        region: "{{ region }}"
+      register: ec2_info
+
+    - name: extract ip
+      set_fact:
+        public_ips: "{{ ec2_info.instances | selectattr('public_ip_address', 'defined' ) | map(attribute='public_ip_address') | list }}"
+
+    - name: print ip
+      copy:
+       content: "{{ public_ips | join('\n') }}"
+       dest: "{{ output_file }}"
+  
+
+
+  
+
+
+  
+
+  
